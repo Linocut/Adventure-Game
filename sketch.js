@@ -8,6 +8,13 @@ let bgImage;
 let coffeeImage; 
 let music; 
 
+var cnv;
+
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  var y = (windowHeight - height) / 2;
+  cnv.position(x, y);
+}
 
 let gameState = {
   gameEnd: false,
@@ -26,10 +33,16 @@ function preload()
   music = loadSound('glauciaChill.mp4');	
   
 }
+function windowResized() {
+  centerCanvas();
+}
 function setup() {
-  createCanvas(960, 540);
+   cnv = createCanvas(960, 540);
+  centerCanvas();
+  background(255, 0, 200);
+  
   gameEnd = false; 
-  music.loop();
+  
   
   let badMessage = new message("Oh I'm sorry..I don't think there's anything I can do to help with that.", [], null ,glauciaSpriteSad );
   
@@ -47,7 +60,9 @@ function setup() {
   textSize(24);
   textAlign(LEFT, TOP);
 }
-
+function mouseClicked(){
+  music.loop();
+}
 function draw() {
   background(220);
  
