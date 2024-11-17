@@ -7,17 +7,23 @@ let glauciaSpriteSad;
 let bgImage; 
 let coffeeImage; 
 let music; 
+let img;
+let img2; 
 
 var cnv;
+let toggleFullscreenButton; 
 
 function centerCanvas() {
   var x = (windowWidth - width) / 2;
   var y = (windowHeight - height) / 2;
   cnv.position(x, y);
+   if (toggleFullscreenButton) {
+    toggleFullscreenButton.position(cnv.x + width - 150, cnv.y + 20);
+  }
 }
 
 let gameState = {
-  gameEnd: false,
+  gameEnd: false, 
   coffee: false, 
  
 };
@@ -31,14 +37,27 @@ function preload()
   bgImage = loadImage("Background.png");
   coffeeImage = loadImage("coffee.png");
   music = loadSound('glauciaChill.mp4');	
-  
-}
+    img = createImg('ButtonImg.png', 'Fullscreen Button');  
+  img2 = createImg('ButtonImg2.png', 'Fullscreen Button'); 
+  img.hide(); 
+  img2.hide(); 
+} 
 function windowResized() {
   centerCanvas();
+  
 }
 function setup() {
-   cnv = createCanvas(960, 540);
+  
+ 
+  
+   cnv = createCanvas(960, 540);   
+
   centerCanvas();
+  toggleFullscreenButton = createButton('');
+   img.show(); 
+  toggleFullscreenButton.child(img); 
+  toggleFullscreenButton.position(cnv.x + width - 150, cnv.y + 20); // Upper-right corner with a margin
+  toggleFullscreenButton.mousePressed(toggleFullscreen);
   background(255, 0, 200);
   
   gameEnd = false; 
@@ -82,6 +101,7 @@ function restart(){
   gameState[1] = false; 
 }
 function startMusic() {
+
   // Play music if it's not already playing
   if (!music.isPlaying()) {
     music.loop();
@@ -89,6 +109,7 @@ function startMusic() {
   }
 }
 function mouseClicked() {
+
     let audioCtx = getAudioContext();
   if (audioCtx.state !== 'running') {
     audioCtx.resume().then(() => {
@@ -123,8 +144,20 @@ function mouseClicked() {
 
 
 }
-
-
+function toggleFullscreen() {
+  let fs = fullscreen(); // Check current fullscreen state
+  fullscreen(!fs); // Toggle fullscreen state
+ 
+   if (fs) {
+     img.show(); 
+     img2.hide(); 
+    toggleFullscreenButton.child(img);  // Set the image for exiting fullscreen
+  } else {
+    img2.show(); 
+    img.hide(); 
+    toggleFullscreenButton.child(img2); // Set the image for entering fullscreen
+  }
+}
 class message{
   
   constructor(messageText, choiceArray, nextMessage, imageVar, varIndex ){
