@@ -50,7 +50,7 @@ function setup() {
   
  
   
-     cnv = createCanvas(800, 360);     
+    cnv = createCanvas(1280 ,800);     
 
   centerCanvas();
   toggleFullscreenButton = createButton('');
