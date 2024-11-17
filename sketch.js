@@ -82,6 +82,24 @@ function restart(){
   gameState[1] = false; 
 }
 function mouseClicked() {
+   let audioCtx = getAudioContext();
+  if (audioCtx.state !== 'running') {
+    audioCtx.resume().then(() => {
+      console.log('Audio context resumed');
+      if (!music.isPlaying()) {
+        music.loop();
+        console.log('Music started');
+      }
+    }).catch(err => {
+      console.error('Error resuming audio context:', err);
+    });
+  } else if (!music.isPlaying()) {
+    music.loop();
+    console.log('Music started');
+  }
+  
+  
+  
   if(currentMessage.nextMessage != null){
       currentMessage = currentMessage.nextMessage; 
 
@@ -99,17 +117,7 @@ function mouseClicked() {
       }
     }
   }
-    let audioCtx = getAudioContext();
-  if (audioCtx.state !== 'running') {
-    audioCtx.resume();
-    console.log('Audio context resumed');
-  }
 
-  // Play music if not playing
-  if (!music.isPlaying()) {
-    music.play();
-    console.log('Music started');
-  }
 
 }
 
