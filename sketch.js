@@ -81,21 +81,24 @@ function restart(){
   gameState[0] = false;
   gameState[1] = false; 
 }
+function startMusic() {
+  // Play music if it's not already playing
+  if (!music.isPlaying()) {
+    music.loop();
+    console.log('Music started playing.');
+  }
+}
 function mouseClicked() {
-   let audioCtx = getAudioContext();
+    let audioCtx = getAudioContext();
   if (audioCtx.state !== 'running') {
     audioCtx.resume().then(() => {
-      console.log('Audio context resumed');
-      if (!music.isPlaying()) {
-        music.loop();
-        console.log('Music started');
-      }
+      console.log('Audio context resumed successfully.');
+      startMusic();
     }).catch(err => {
       console.error('Error resuming audio context:', err);
     });
-  } else if (!music.isPlaying()) {
-    music.loop();
-    console.log('Music started');
+  } else {
+    startMusic();
   }
   
   
