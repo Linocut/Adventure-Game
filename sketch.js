@@ -42,7 +42,7 @@ function setup() {
   background(255, 0, 200);
   
   gameEnd = false; 
-  
+ // music.loop();
   
   let badMessage = new message("Oh I'm sorry..I don't think there's anything I can do to help with that.", [], null ,glauciaSpriteSad );
   
@@ -60,9 +60,8 @@ function setup() {
   textSize(24);
   textAlign(LEFT, TOP);
 }
-function mouseClicked(){
-  music.loop();
-}
+
+
 function draw() {
   background(220);
  
@@ -99,6 +98,17 @@ function mouseClicked() {
         } 
       }
     }
+  }
+    let audioCtx = getAudioContext();
+  if (audioCtx.state !== 'running') {
+    audioCtx.resume();
+    console.log('Audio context resumed');
+  }
+
+  // Play music if not playing
+  if (!music.isPlaying()) {
+    music.play();
+    console.log('Music started');
   }
 
 }
